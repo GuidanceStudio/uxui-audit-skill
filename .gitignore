@@ -1,0 +1,14 @@
+# Capture runs (screenshots + per-run artifacts) live outside version control.
+.ui-review-runs/
+*-run/
+
+# Playwright / Node
+node_modules/
+playwright-report/
+test-results/
+.auth/
+storageState.json
+
+# OS / editor
+.DS_Store
+*.swp
