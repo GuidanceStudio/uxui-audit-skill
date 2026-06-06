@@ -58,50 +58,50 @@ ui-review/
 ## Milestones
 
 ### M1 — Scaffold & meta
-- [ ] `LICENSE` (MIT), `.gitignore` (node_modules, .ui-review-runs/, *.png runs).
-- [ ] `README.md` — what it is, **Requirements** (core: image-reading agent;
+- [x] `LICENSE` (MIT), `.gitignore` (node_modules, .ui-review-runs/, *.png runs).
+- [x] `README.md` — what it is, **Requirements** (core: image-reading agent;
       recommended: Node≥18 + Playwright + `playwright install chromium`;
       optional: Playwright MCP, axe/pa11y), install (`./install.sh --force`),
       usage, the capture-method matrix, a credits/sources section.
-- [ ] `install.sh` — copy `claude/ui-review/` → `~/.claude/skills/ui-review/`;
+- [x] `install.sh` — copy `claude/ui-review/` → `~/.claude/skills/ui-review/`;
       `--force`/`--target`/`--help`; remote-mode stub. Modeled on `code-review`.
-- [ ] First commit.
+- [x] First commit.
 
 ### M2 — SKILL.md (router)
-- [ ] Frontmatter `name`/`description` (trigger-rich, concise).
-- [ ] "When to invoke" trigger keywords; the 5-phase workflow summary; the 6
+- [x] Frontmatter `name`/`description` (trigger-rich, concise).
+- [x] "When to invoke" trigger keywords; the 5-phase workflow summary; the 6
       dimension groups one-liner each; the 0–4 severity scale; capture-method
       pointer; "what pixels can't prove → recommend axe" caveat; sources.
 
 ### M3 — dimensions.md (the heuristic catalog)
-- [ ] 6 groups with concrete "what to look for in a screenshot" cues:
+- [x] 6 groups with concrete "what to look for in a screenshot" cues:
       1) Usability (Nielsen 10), 2) Accessibility (WCAG POUR + contrast/target),
       3) Visual design (hierarchy/spacing/typography/colour-semantics/density),
       4) Content & language (**i18n consistency**, **no jargon leak**, microcopy),
       5) State & data coverage (empty/loading/error/first-run/zero-one-many/overflow),
       6) Responsive (per-breakpoint integrity).
-- [ ] Severity 0–4 rubric + how to assign it.
+- [x] Severity 0–4 rubric + how to assign it.
 
 ### M4 — capture.md + scripts/capture.mjs
-- [ ] `capture.mjs`: config-driven Playwright (baseUrl, routes[], viewports[],
+- [x] `capture.mjs`: config-driven Playwright (baseUrl, routes[], viewports[],
       optional `storageState` auth, outDir, waitMs); per-page try/catch; writes
       `<route>-<viewport>.png`; `--help`. No project specifics.
-- [ ] `capture.config.example.json`.
-- [ ] `capture.md`: the three methods (script / Playwright-MCP / manual), exact
+- [x] `capture.config.example.json`.
+- [x] `capture.md`: the three methods (script / Playwright-MCP / manual), exact
       install commands, auth-via-storageState recipe, viewport presets.
 
 ### M5 — report-template.md + regression-guards.md
-- [ ] `report-template.md`: `✅ strengths` + findings table (severity · surface ·
+- [x] `report-template.md`: `✅ strengths` + findings table (severity · surface ·
       dimension · issue · screenshot · fix), sorted by severity, + summary counts.
-- [ ] `regression-guards.md`: framework-agnostic patterns to lock a fix
+- [x] `regression-guards.md`: framework-agnostic patterns to lock a fix
       (assert title text, assert forbidden-substring absent, run axe for
       contrast/ARIA), with a note to feed top findings into a TDD/devplan flow.
 
 ### M6 — Install & verify
-- [ ] `node --check scripts/capture.mjs` (syntax) + `node scripts/capture.mjs --help`.
-- [ ] `./install.sh --force` → assert `~/.claude/skills/ui-review/SKILL.md` exists
+- [x] `node --check scripts/capture.mjs` (syntax) + `node scripts/capture.mjs --help`.
+- [x] `./install.sh --force` → assert `~/.claude/skills/ui-review/SKILL.md` exists
       and frontmatter parses.
-- [ ] Final commit.
+- [x] Final commit.
 
 **Exit gate**: `/ui-review` installs and loads; SKILL.md routes the 5 phases;
 the capture script runs generically (any baseUrl); README states every install
