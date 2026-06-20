@@ -135,13 +135,14 @@ uxui-audit-skill/
         └── capture.config.example.json
 ```
 
-## Credits
+## Inspiration
 
-Synthesised from, and indebted to: shiplightai *Design Review* (5-phase flow +
-regression guards), mastepanoski *claude-skills* `nielsen-heuristics-audit`
-(Nielsen 10 + 0–4 severity), Anthropic *frontend-design* (atomic-fix +
-before/after ethos), the WCAG 2.2 / POUR guidelines, Jakob Nielsen's 10
-usability heuristics, Don Norman's *The Design of Everyday Things*, and the
-APCA contrast model.
+Synthesised from: shiplightai *Design Review* (5-phase flow + regression
+guards), mastepanoski *nielsen-heuristics-audit* (Nielsen 10 + 0–4 severity),
+Anthropic *frontend-design* (atomic-fix + before/after ethos), the WCAG 2.2 /
+POUR guidelines, Jakob Nielsen's 10 usability heuristics, Don Norman's *The
+Design of Everyday Things*, and the APCA contrast model.
+
+MIT licensed.
 
 MIT licensed.
