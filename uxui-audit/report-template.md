@@ -7,7 +7,7 @@ and a **concrete fix**; strengths are listed too; coverage gaps are stated.
 ---
 
 ```markdown
-# UI/UX review — <app / surface set> (<date>)
+# UX/UI audit — <app / surface set> (<date>)
 
 **Scope**: <N> surfaces × <M> viewports (<list>). Language yardstick: <e.g. "IT
 end-to-end">. Capture: <Playwright | MCP | provided>. Not covered: <skipped
@@ -24,8 +24,22 @@ surfaces; a11y deferred to axe; states not reachable>.
 | 2 minor | 5 |
 | 1 cosmetic | 2 |
 
-By dimension: usability ·· accessibility ·· visual ·· content/language ··
-state ·· responsive.
+By dimension:
+
+| Dimension | Findings |
+|---|---|
+| Usability | ·· |
+| Accessibility | ·· |
+| Visual Design | ·· |
+| Content & Language | ·· |
+| State & Data | ·· |
+| Responsive | ·· |
+| Information Architecture | ·· |
+| Interaction Design | ·· |
+| User Journey / Flow | ·· |
+| Cognitive Load & Onboarding | ·· |
+| Trust & Credibility | ·· |
+| Error Prevention & Recovery | ·· |
 
 ## ✅ Strengths (don't touch)
 - <what already works — calibrates the review>
@@ -40,7 +54,7 @@ state ·· responsive.
 ### 🟠 [S3] <title> — <surface> · <dimension>
 - **Screenshot**: `users-desktop.png`
 - **Issue**: the page title shows the class name "Users Page"; the nav says
-  "Utenti" → mixed language + leaked internal name.
+  "Utenti" → mixed language + leaked internal name (Content & Language).
 - **Fix**: set an Italian page title "Utenti".
 
 ### 🟡 [S2] <title> — <surface> · <dimension>
@@ -49,6 +63,8 @@ state ·· responsive.
 ## Needs a live / automated check (not provable from a screenshot)
 - <contrast ratio on X → run axe-core>
 - <focus order / keyboard nav on the form → live pass>
+- <gesture fluidity on mobile → live pass>
+- <hover state transitions → live pass>
 
 ## Suggested next step
 - <e.g. "fix the S3/S4 set, then add the regression guards in
@@ -62,6 +78,8 @@ state ·· responsive.
 - **Sort by severity** (4 → 1); within a severity, group by surface or dimension.
 - **One finding = one issue.** Don't bundle "fix the whole page".
 - **Screenshot ref is mandatory** — name the exact file.
+- **Dimension tag is mandatory** — findings can span multiple dimensions; list
+  the primary one.
 - **Fix is mandatory and specific** — a reviewer who can't say the fix hasn't
   finished analysing.
 - **Strengths are mandatory** — an all-red report is not trustworthy.

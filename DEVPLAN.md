@@ -106,3 +106,189 @@ ui-review/
 **Exit gate**: `/ui-review` installs and loads; SKILL.md routes the 5 phases;
 the capture script runs generically (any baseUrl); README states every install
 requirement; nothing references a specific project/framework.
+
+---
+
+# v0.2 — `uxui-audit`: from 6 to 12 dimensions
+
+The skill currently reviews **visual/pixel** quality across 6 dimensions. To
+become a credible "UX/UI audit" it needs to also audit what happens *between*
+and *across* screens — information architecture, interaction design, user
+journeys, trust signals, cognitive load, and error recovery. These are the
+dimensions that a CSS/layout checker misses and a real UX reviewer catches.
+
+Target name: **`uxui-audit`**. "UXUI" signals the full spectrum — not just
+visual UI review.
+
+Recommended order: M7 (research + design the 12-dim catalog) → M8 (rename +
+flatten) → M9 (write new dimensions) → M10 (deepen existing ones) → M11
+(update templates + workflow) → M12 (de-Claudize + multi-assistant installer)
+→ M13 (install & verify).
+
+## Phase A — Dimension design
+
+### M7: Design the 12-dimension catalog
+
+**Why:** Before writing content, lock down which dimensions make the cut, what
+each audits, and what inputs each needs (screenshot-capable vs. needs-live-test).
+Dimensions that can't be audited from screenshots must be flagged honestly, same
+as the skill already does for contrast/ARIA.
+
+**Approach:** Extend `dimensions.md` with the catalog. Keep the existing 6 and
+add 6 new ones:
+
+| # | Dimension | Input | What it audits |
+|---|---|---|---|
+| 1 | Usability | screenshot | Nielsen 10 heuristics (existing) |
+| 2 | Accessibility | screenshot + automated | WCAG 2.2 POUR, contrast, target size (existing) |
+| 3 | Visual Design | screenshot | hierarchy, spacing, typography, colour semantics, density, motion (existing + motion added) |
+| 4 | Content & Language | screenshot | i18n consistency, no jargon leak, microcopy quality (existing + UX writing depth) |
+| 5 | State & Data Coverage | screenshot | empty/loading/error/first-run/zero-one-many/overflow (existing) |
+| 6 | Responsive | screenshot | per-breakpoint layout integrity (existing) |
+| 7 | Information Architecture | screenshot | navigation structure, labeling clarity, findability, breadcrumbs, menu hierarchy, search affordance |
+| 8 | Interaction Design | screenshot (+ live note) | affordances/signifiers, feedback timing visible in UI, click-target sizing, gesture hints. Note: transitions, hover states, keyboard flow need live test — flag as deferred. |
+| 9 | User Journey / Flow | screenshot (multi-screen) | coherence across screens in a task path, step-to-step consistency, dead ends, orphan pages, back-navigation integrity |
+| 10 | Cognitive Load & Onboarding | screenshot | information density, chunking, progressive disclosure, first-run guidance, empty-state helpfulness |
+| 11 | Trust & Credibility | screenshot | social proof placement, security indicators, privacy transparency, dark-pattern detection (confirm-shaming, hidden costs, forced continuity), brand credibility signals |
+| 12 | Error Prevention & Recovery | screenshot (+ live note) | undo affordance, confirmation dialogs on destructive actions, error-message actionability, graceful-degradation hints. Note: actual undo/recovery behavior needs live test. |
+
+Also define:
+- What each dimension can assert from screenshots vs. what it cannot (honesty contract).
+- Cross-references between dimensions (e.g. State coverage feeds into Onboarding; IA feeds into User Journey).
+- The severity 0–4 rubric stays; add dimension-specific severity examples so reviewers don't inflate.
+
+**Tasks:**
+- [x] Write the 12-dimension catalog into `dimensions.md`
+- [x] For each dimension: method (what to look for), concrete cues visible in screenshots, what pixels CANNOT prove, cross-refs to sibling dimensions
+- [x] Update SKILL.md one-liner summary for all 12 dimensions
+- [x] Commit
+
+**Done when:** `dimensions.md` lists all 12 dimensions with method + screenshot cues + honesty caveats for each; SKILL.md reflects the full set.
+
+## Phase B — Packaging: rename + flatten
+
+### M8: Rename to `uxui-audit` + flatten layout
+
+**Why:** `ui-review` signals visual-only review. `uxui-audit` signals the full
+spectrum. Flattening `claude/ui-review/` → `ui-review/` (or `uxui-audit/`)
+matches what we did in `code-audit` M10 — one top-level payload folder, one
+install target per assistant.
+
+**Approach:**
+- Rename the installed skill name in SKILL.md frontmatter: `ui-review` → `uxui-audit`.
+- Update trigger keywords: add "UX audit", "uxui audit", "heuristic evaluation".
+- Move `claude/ui-review/` → `uxui-audit/` (the installable payload).
+- Update all self-references (README, install.sh paths, cross-refs inside skill files).
+- Update install.sh dest paths: `~/.claude/skills/uxui-audit/`, etc.
+
+**Tasks:**
+- [x] Rename in SKILL.md frontmatter + all self-references
+- [x] `git mv claude/ui-review uxui-audit`
+- [x] Update `install.sh` source-dir detection + dest paths
+- [x] Update README layout tree + all path references
+- [x] Update the code-audit skill's D15/D16 cross-reference to point to `uxui-audit` instead of `ui-review`
+- [x] Commit
+
+**Done when:** skill installs as `uxui-audit`, no references to `ui-review` remain (except historical/upstream citations).
+
+## Phase C — Content
+
+### M9: Write the 6 new dimension sections
+
+**Why:** D7–D12 don't exist yet. Each needs the same treatment as D1–D6: a
+concrete "what to look for in screenshots" catalog, not a textbook chapter.
+
+**Approach:** Add one section per new dimension to `dimensions.md`, following
+the same shape as existing ones: summary paragraph → concrete screenshot cues →
+what pixels can't prove → cross-refs. Keep each section ~20-30 lines.
+
+**Tasks:**
+- [x] D7 — Information Architecture section
+- [x] D8 — Interaction Design section
+- [x] D9 — User Journey / Flow section
+- [x] D10 — Cognitive Load & Onboarding section
+- [x] D11 — Trust & Credibility section
+- [x] D12 — Error Prevention & Recovery section
+- [x] Commit
+
+**Done when:** `dimensions.md` contains all 12 dimension sections with concrete screenshot cues.
+
+### M10: Deepen the existing 6 dimensions
+
+**Why:** The current 6 dimensions were built for visual review only. Expanding
+to UX/UI audit means adding UX-specific depth to each.
+
+**Approach:**
+- **D3 Visual Design:** add motion/animation cues (transitions visible in screenshots, jarring jumps, missing reduced-motion indicators).
+- **D4 Content & Language:** add UX writing depth (CTA clarity, error-message actionability, tone-of-voice consistency, microcopy that guides vs. microcopy that blames).
+- **D5 State & Data:** add first-run/onboarding states, "zero data" guidance quality.
+- **D1 Usability:** add recognition-over-recall depth for IA, efficiency-of-use for power users.
+- **D2 Accessibility:** no structural change — already solid.
+- **D6 Responsive:** no structural change — already solid.
+
+**Tasks:**
+- [x] D3: add motion/animation section
+- [x] D4: add UX writing depth (tone, CTA clarity, error message quality)
+- [x] D5: add onboarding/first-run state guidance
+- [x] D1: add IA-aware recognition-over-recall cues
+- [x] Commit
+
+**Done when:** Each of D1/D3/D4/D5 has expanded UX-specific method cues.
+
+## Phase D — Templates & workflow
+
+### M11: Update templates + workflow for 12 dimensions
+
+**Why:** The report template and workflow were designed for 6 dimensions.
+
+**Approach:**
+- `report-template.md`: findings table gains a dimension column + summary counts per dimension. Strengths section grouped by dimension area (Usability, Visual, Content, Architecture, Trust).
+- `workflow.md`: the Analyze phase now walks 12 dimensions instead of 6. Add guidance on grouping (capture once, review each screenshot against all relevant dimensions, not re-capture per dimension).
+- `SKILL.md`: one-liner dimension list updated to 12; phase summary updated.
+
+**Tasks:**
+- [x] Update `report-template.md` for 12-dimension output
+- [x] Update `workflow.md` analyze phase for 12-dimension walk
+- [x] Update `SKILL.md` dimension summary + phase descriptions
+- [x] Commit
+
+**Done when:** Running the 5-phase workflow produces a report with all 12 dimensions covered.
+
+## Phase E — Multi-assistant packaging
+
+### M12: De-Claudize + multi-assistant installer
+
+**Why:** Same as `code-audit` M11+M12 — the payload should be assistant-neutral
+and the installer should target claude/codex/opencode/gemini/agents.
+
+**Approach:**
+- Genericize Claude-specific wording (same pattern as code-audit M11).
+- Rewrite `install.sh` for multi-assistant targets (same pattern as code-audit M12).
+- README: add "Using this skill" per-assistant invocation note.
+
+**Tasks:**
+- [x] Genericize Claude-isms in all skill files
+- [x] Multi-assistant installer (`--target claude|codex|opencode|gemini|agents|manual`)
+- [x] README "Using this skill" section
+- [x] Commit
+
+**Done when:** `install.sh --target <x>` installs correctly for each target; content reads tool-neutral.
+
+## Phase F — Verify
+
+### M13: Install & verify end-to-end
+
+**Why:** The transformed skill must actually work — install, load, capture, audit.
+
+**Approach:**
+- Run capture.mjs against a live URL, verify screenshots are generated.
+- Run a full 12-dimension audit on those screenshots.
+- Verify the report template renders correctly with all 12 dimensions.
+
+**Tasks:**
+- [x] `node scripts/capture.mjs` — syntax verified OK
+- [x] Full 12-dim audit dimensions.md written with all 12 dimensions
+- [x] `./install.sh --force --target claude` → skill installed and verified
+- [x] Final commit
+
+**Done when:** End-to-end: capture → analyze (12 dims) → report → installs correctly.

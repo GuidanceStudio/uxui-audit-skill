@@ -1,16 +1,16 @@
-# ui-review
+# uxui-audit
 
-A **generalist UI/UX review skill** for coding agents (Claude Code, and any
-agent that supports the [Agent Skills](https://agentskills.io) standard and can
-read images).
+A **full-spectrum UX/UI audit skill** for coding agents (Claude Code, Codex,
+opencode, and any agent that supports the [Agent Skills](https://agentskills.io)
+standard and can read images).
 
 It captures rendered screenshots of *any* web UI, audits them against a
-structured heuristic framework (Nielsen + WCAG + Don Norman, plus
-language/jargon/state checks the generic skills miss), and emits triageable
-findings with a 0–4 severity each — optionally handing the top issues off as
-regression guards so fixes stay fixed.
+structured 12-dimension framework (Nielsen + WCAG + Don Norman + IA +
+trust/dark-patterns + error recovery + the language/jargon/state checks the
+generic skills miss), and emits triageable findings with a 0–4 severity each —
+optionally handing the top issues off as regression guards.
 
-It is the **visual sibling of a code review**: same severity scheme and
+It is the **rendered sibling of `tech-audit`**: same severity scheme and
 "router + dimensions" philosophy, but the input is *rendered pixels*, not
 source files.
 
@@ -22,19 +22,29 @@ Five phases:
    target audience & expected UI language, and any auth.
 2. **Capture** — screenshots per surface × viewport (Playwright, a Playwright
    MCP, or screenshots you provide).
-3. **Analyze** — walk six dimension groups over each screenshot, assign a
+3. **Analyze** — walk twelve dimension groups over each screenshot, assign a
    severity 0–4, tie every finding to a specific screenshot.
 4. **Report** — a triageable report: strengths, findings sorted by severity,
    each with a concrete fix.
 5. **Guard** *(optional)* — turn the top findings into regression guards in
    *your* test stack (framework-agnostic guidance).
 
-The six dimension groups: **Usability** (Nielsen 10) · **Accessibility**
-(WCAG 2.2 POUR, contrast, target size) · **Visual design** (hierarchy, spacing,
-typography, colour semantics, density) · **Content & language** (i18n
-consistency, no internal-jargon leak, microcopy) · **State & data coverage**
-(empty / loading / error / first-run / zero-one-many / overflow) ·
-**Responsive** (per-breakpoint integrity).
+The twelve dimensions:
+
+| # | Dimension | Focus |
+|---|---|---|
+| 1 | Usability | Nielsen's 10 heuristics |
+| 2 | Accessibility | WCAG 2.2 POUR, contrast, target size |
+| 3 | Visual Design | hierarchy, spacing, typography, colour semantics, motion |
+| 4 | Content & Language | i18n consistency, no jargon leak, microcopy, UX writing |
+| 5 | State & Data | empty/loading/error/first-run/zero-one-many/overflow |
+| 6 | Responsive | per-breakpoint layout integrity, touch ergonomics |
+| 7 | Information Architecture | nav structure, labeling, findability, breadcrumbs |
+| 8 | Interaction Design | affordances, feedback, click-target sizing, gestures |
+| 9 | User Journey / Flow | multi-screen coherence, back-navigation, dead ends |
+| 10 | Cognitive Load & Onboarding | density, chunking, progressive disclosure, first-run guidance |
+| 11 | Trust & Credibility | social proof, dark patterns, security indicators, transparency |
+| 12 | Error Prevention & Recovery | confirmations, undo, error message actionability, degradation |
 
 ## Requirements
 
@@ -50,35 +60,79 @@ The skill itself is just Markdown + one Node script — **no build step**.
 
 > Auth-gated UIs: generate a Playwright `storageState.json` once (log in via
 > `npx playwright codegen <url>` or a small script) and pass it in the capture
-> config — see `claude/ui-review/capture.md`.
+> config — see `uxui-audit/capture.md`.
 
 ## Install
 
-```bash
-git clone <this-repo> ui-review && cd ui-review
-./install.sh --force
+The installer is multi-assistant. Run it with no target for an interactive
+menu, or pass `--target`:
+
+```sh
+git clone git@github.com:GuidanceStudio/uxui-audit-skill.git
+cd uxui-audit-skill
+./install.sh                      # interactive menu
+./install.sh --target claude      # ~/.claude/skills/uxui-audit/
+./install.sh --target codex        # ~/.codex/skills/uxui-audit/
+./install.sh --target opencode     # ~/.config/opencode/skills/uxui-audit/
+./install.sh --target gemini        # ~/.gemini/commands/uxui-audit.toml (+ payload)
+./install.sh --target agents        # AGENTS.md pointer for Cursor/Windsurf/Copilot/Aider/Continue
+./install.sh --target all           # claude + codex + opencode
+./install.sh --target manual        # print the folder path; copy it yourself
 ```
 
-This copies the skill into `~/.claude/skills/ui-review/`. Then invoke it in your
-agent:
+Remote one-liner (no clone needed):
 
-```
-/ui-review            # review the running app — the skill will ask for scope
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/GuidanceStudio/uxui-audit-skill/main/install.sh) --target claude
 ```
 
-or just describe the task ("review the UI/UX of http://localhost:3000").
+## Use
+
+Invoke the skill however your assistant invokes skills, then describe what you
+want:
+
+| Assistant | How to invoke |
+|---|---|
+| Claude Code | `/uxui-audit`, or just ask ("UX audit of my app") |
+| Codex CLI | `/uxui-audit` (same SKILL.md standard), or ask |
+| opencode | `/uxui-audit`, or ask |
+| Gemini CLI | `/uxui-audit` (installed as a TOML command) |
+| Cursor / Windsurf / Copilot / Aider | reference the skill from `AGENTS.md`, then ask |
+
+Typical phrasings: `"UX audit of http://localhost:3000"`, `"heuristic evaluation"`,
+`"review the UI/UX"`, `"check accessibility"`, `"design review"`.
 
 ## Usage sketch
 
 ```bash
 # 1. capture (Playwright path)
 npm i -D playwright && npx playwright install chromium
-cp ~/.claude/skills/ui-review/scripts/capture.config.example.json ui-review.config.json
-# edit ui-review.config.json: baseUrl, routes, viewports, (optional) auth
-node ~/.claude/skills/ui-review/scripts/capture.mjs ui-review.config.json
+cp ~/.claude/skills/uxui-audit/scripts/capture.config.example.json uxui-audit.config.json
+# edit uxui-audit.config.json: baseUrl, routes, viewports, (optional) auth
+node ~/.claude/skills/uxui-audit/scripts/capture.mjs uxui-audit.config.json
 # → screenshots land in ./.ui-review-runs/<timestamp>/
 
-# 2. ask the agent: "/ui-review — analyze .ui-review-runs/<timestamp>"
+# 2. ask the agent: "/uxui-audit — analyze .ui-review-runs/<timestamp>"
+```
+
+## Repository layout
+
+```
+uxui-audit-skill/
+├── install.sh
+├── README.md
+├── LICENSE
+├── DEVPLAN.md
+└── uxui-audit/
+    ├── SKILL.md
+    ├── dimensions.md
+    ├── workflow.md
+    ├── capture.md
+    ├── report-template.md
+    ├── regression-guards.md
+    └── scripts/
+        ├── capture.mjs
+        └── capture.config.example.json
 ```
 
 ## Credits

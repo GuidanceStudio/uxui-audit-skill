@@ -41,6 +41,8 @@ as it ships.
 - For auth-gated UIs, set up `storageState` once (see `capture.md`).
 - Sanity-check the shots opened correctly — a captured **error page** (blank,
   500, login bounce) is itself a finding, not a capture failure to hide.
+- For User Journey (D9), capture sequential screens in a flow path — don't just
+  capture isolated pages. A checkout or signup flow needs step-by-step shots.
 
 Output: `./.ui-review-runs/<timestamp>/` (or a folder the user points at) full
 of screenshots.
@@ -49,19 +51,24 @@ of screenshots.
 
 Goal: honest, specific findings tied to screenshots.
 
-- **Read every screenshot** (the agent's image input). For each, walk the six
+- **Read every screenshot** (the agent's image input). For each, walk the twelve
   groups in `dimensions.md`.
+- Capture once, review against all dimensions — don't re-capture per dimension.
 - Record each issue as: `dimension · severity 0–4 · screenshot · what's wrong ·
   concrete fix`. The fix must be actionable ("title shows the class name
   'Users Page'; set an Italian page title 'Utenti'"), never vague.
-- **Note strengths** as you go (✅) — they calibrate the review and tell the user
+- **Note strengths** as you go (✅) — they calibrate the audit and tell the user
   what not to touch.
 - **Mark the limits**: when a check needs the DOM/live (exact contrast, focus
-  order, keyboard, motion, ARIA), record it as "needs axe/pa11y/live" rather
-  than guessing pass/fail.
+  order, keyboard, motion, ARIA, gesture fluidity, actual undo behavior), record
+  it as "needs axe/pa11y/live" rather than guessing pass/fail.
 - **Cross-surface checks**: compare screens for consistency (same concept named
   the same way, same button placement, same language). Cite both screenshots.
+  Cross-surface findings belong to Usability §4, Content §4 (i18n), or Journey §9.
 - Don't pad. A clean dimension is "clean".
+- **UX depth dimensions (7–12)**: give IA, Interaction, Journey, Cognitive,
+  Trust, and Error Recovery the same weight as 1–6. They catch what a CSS/visual
+  checker misses.
 
 Output: a findings list (internal), each triageable.
 
@@ -77,7 +84,7 @@ Goal: a report the user can act on immediately.
 - Group by surface or by dimension — whichever reads clearer for this set
   (many cross-cutting findings → group by dimension; few surfaces → by surface).
 - Be honest about coverage: list what was NOT reviewed (surfaces skipped,
-  a11y deferred to axe, states not reachable).
+  a11y deferred to axe, states not reachable, live-only checks).
 
 Output: the markdown report (and the screenshots it references).
 
@@ -85,12 +92,12 @@ Output: the markdown report (and the screenshots it references).
 
 Goal: stop the top findings from regressing — in the user's own stack.
 
-- Only on request. This skill **reviews**; it does not silently edit the app.
+- Only on request. This skill **audits**; it does not silently edit the app.
 - For each high-severity fix, suggest a regression guard using
   `regression-guards.md` (framework-agnostic): assert the corrected title text,
   assert a forbidden substring is absent, run axe for contrast/ARIA, etc.
 - Offer to hand the prioritised fix list to a planning/TDD flow (e.g. a devplan
-  skill) rather than fixing inline — keeps review and remediation separated.
+  skill) rather than fixing inline — keeps audit and remediation separated.
 
 Output: a short list of guard tests to add (in the user's framework), or a
 handoff to a fix plan.
