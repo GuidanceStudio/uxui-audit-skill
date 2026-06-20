@@ -292,3 +292,35 @@ and the installer should target claude/codex/opencode/gemini/agents.
 - [x] Final commit
 
 **Done when:** End-to-end: capture → analyze (12 dims) → report → installs correctly.
+
+---
+
+## v0.3 — D13 Performance Perception + D8 Form UX
+
+### M14: Add Performance Perception and Form UX
+
+**Why:** Two gaps vs the state of the art: no dimension audits perceived
+performance (skeleton quality, layout shift, optimistic UI, loading UX), and
+no form-specific UX checks (mobile keyboards, field grouping, inline validation
+timing, smart defaults). Morville's UX Honeycomb added as unifying meta-lens.
+
+**Approach:**
+- `dimensions.md`: add Form UX subsection to D8 Interaction Design; add D13
+  Performance Perception dimension.
+- `SKILL.md`: update dimension table (13), add Morville reference, update
+  intro counts.
+- `report-template.md`: add Performance Perception to dimension summary table.
+- `workflow.md`: update dimension counts to 13.
+- `README.md`: update dimension table (13), update intro counts.
+
+**Tasks:**
+- [x] D8: add Form UX subsection (mobile keyboards, grouping, inline validation, smart defaults)
+- [x] D13: Performance Perception dimension (skeleton, perceived speed, optimistic UI, layout shift, progressive loading)
+- [x] SKILL.md: Morville Honeycomb in intro, 13-dim table, update all counts
+- [x] report-template.md: add D13 to dimension summary
+- [x] workflow.md: update dimension counts
+- [x] README.md: update dimension table and intro
+- [x] Commit & push
+
+**Done when:** `dimensions.md` lists 13 dimensions; all counts match across
+SKILL.md, README, report-template, workflow.

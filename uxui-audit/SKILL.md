@@ -1,23 +1,24 @@
 ---
 name: uxui-audit
-description: Full-spectrum UX/UI audit of a rendered web interface (not its source). Captures screenshots of any app — Playwright, a Playwright MCP, or screenshots you provide — then audits them across twelve dimensions (Nielsen usability, WCAG accessibility, visual design, content & language/i18n, state coverage, responsive, information architecture, interaction design, user journey, cognitive load & onboarding, trust & credibility, error prevention & recovery), assigns a 0–4 severity per finding, and emits a triageable report plus optional regression guards. Use when the user asks to "audit the UX/UI", "UX audit", "UI review", "heuristic evaluation", "design review", "audit the interface/screens", or "check the UX" of a running app. Framework-agnostic; needs an image-capable agent (capture needs Node + Playwright, or you supply PNGs).
+description: Full-spectrum UX/UI audit of a rendered web interface (not its source). Captures screenshots of any app — Playwright, a Playwright MCP, or screenshots you provide — then audits them across thirteen dimensions (Nielsen usability, WCAG accessibility, visual design, content & language/i18n, state coverage, responsive, information architecture, interaction design, user journey, cognitive load & onboarding, trust & credibility, error prevention & recovery, performance perception), assigns a 0–4 severity per finding, and emits a triageable report plus optional regression guards. Use when the user asks to "audit the UX/UI", "UX audit", "UI review", "heuristic evaluation", "design review", "audit the interface/screens", or "check the UX" of a running app. Framework-agnostic; needs an image-capable agent (capture needs Node + Playwright, or you supply PNGs).
 ---
 
 # uxui-audit — Router
 
 This skill audits the full UX/UI spectrum — not just visual design. It reviews
 what the user actually *sees* and *experiences*: it captures rendered
-screenshots, then asks specific, methodical questions across twelve dimensions,
+screenshots, then asks specific, methodical questions across thirteen dimensions,
 assigns a severity per finding, and ties every finding to a screenshot.
 
 It absorbs the best of: shiplightai *Design Review* (5-phase flow + regression
 guards), mastepanoski `nielsen-heuristics-audit` (Nielsen 10 + 0–4 severity),
 Anthropic *frontend-design* (atomic-fix + before/after ethos), WCAG 2.2 / POUR,
-Jakob Nielsen's 10 heuristics, Don Norman, and the APCA contrast model — plus
-six dimensions the generic skills omit: **language/i18n consistency**,
-**no internal-jargon leak**, **error-shaped empty states**, **information
-architecture**, **trust & credibility (dark patterns)**, and
-**error prevention & recovery**.
+Jakob Nielsen's 10 heuristics, Don Norman, the APCA contrast model, and
+**Morville's UX Honeycomb** (useful / usable / findable / credible / desirable /
+accessible / valuable) as the unifying quality lens. The dimensions that generic
+skills omit: **language/i18n consistency**, **no internal-jargon leak**,
+**error-shaped empty states**, **information architecture**, **trust & credibility
+(dark patterns)**, **error prevention & recovery**, and **performance perception**.
 
 ## When to invoke
 
@@ -43,7 +44,7 @@ starting a real review.
 2. **Capture** — take screenshots per surface × viewport (and per reachable
    state: empty / filled / error). Methods + exact install commands in
    `capture.md`. Save to a per-run folder; never edit the app to capture.
-3. **Analyze** — read each screenshot and walk the twelve dimension groups in
+3. **Analyze** — read each screenshot and walk the thirteen dimension groups in
    `dimensions.md`. For each issue: dimension · severity 0–4 · the screenshot ·
    what's wrong · the concrete fix. Flag what a screenshot *cannot* prove
    (exact contrast, focus order, keyboard, motion, ARIA, gesture fluidity,
@@ -56,7 +57,7 @@ starting a real review.
    guards in the user's own stack (`regression-guards.md`), and/or hand the fix
    list to a planning/TDD flow. This skill audits; it does not silently edit.
 
-## The twelve dimensions (full catalogue in `dimensions.md`)
+## The thirteen dimensions (full catalogue in `dimensions.md`)
 
 | # | Dimension | What it audits |
 |---|---|---|
@@ -67,11 +68,12 @@ starting a real review.
 | 5 | **State & Data** | empty/loading/error/first-run/zero-one-many/overflow |
 | 6 | **Responsive** | per-breakpoint layout integrity, touch ergonomics |
 | 7 | **Information Architecture** | nav structure, labeling, findability, breadcrumbs |
-| 8 | **Interaction Design** | affordances, feedback, click-target sizing, gestures |
+| 8 | **Interaction Design** | affordances, feedback, click-target sizing, gestures, form UX |
 | 9 | **User Journey / Flow** | multi-screen coherence, back-navigation, dead ends |
 | 10 | **Cognitive Load & Onboarding** | density, chunking, progressive disclosure, first-run guidance |
 | 11 | **Trust & Credibility** | social proof, dark patterns, security indicators, transparency |
 | 12 | **Error Prevention & Recovery** | confirmations, undo, error message actionability, degradation |
+| 13 | **Performance Perception** | skeleton/loading UX, perceived speed, layout shift, optimistic UI |
 
 ## Severity (Nielsen 0–4)
 

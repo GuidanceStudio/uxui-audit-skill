@@ -51,7 +51,7 @@ of screenshots.
 
 Goal: honest, specific findings tied to screenshots.
 
-- **Read every screenshot** (the agent's image input). For each, walk the twelve
+- **Read every screenshot** (the agent's image input). For each, walk the thirteen
   groups in `dimensions.md`.
 - Capture once, review against all dimensions — don't re-capture per dimension.
 - Record each issue as: `dimension · severity 0–4 · screenshot · what's wrong ·
@@ -66,9 +66,9 @@ Goal: honest, specific findings tied to screenshots.
   the same way, same button placement, same language). Cite both screenshots.
   Cross-surface findings belong to Usability §4, Content §4 (i18n), or Journey §9.
 - Don't pad. A clean dimension is "clean".
-- **UX depth dimensions (7–12)**: give IA, Interaction, Journey, Cognitive,
-  Trust, and Error Recovery the same weight as 1–6. They catch what a CSS/visual
-  checker misses.
+- **UX depth dimensions (7–13)**: give IA, Interaction, Journey, Cognitive,
+  Trust, Error Recovery, and Performance the same weight as 1–6. They catch
+  what a CSS/visual checker misses.
 
 Output: a findings list (internal), each triageable.
 

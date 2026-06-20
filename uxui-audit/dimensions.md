@@ -223,6 +223,13 @@ are captured, partially verifiable from static shots.
 - **Gestures & touch** — swipe hints, pull-to-refresh indicators, long-press
   affordances visible on mobile surfaces. Desktop-only gestures (hover-reveal,
   right-click menus) flagged if missing mobile alternatives.
+- **Form UX** — forms are the #1 interaction surface. Check: mobile keyboard
+  type matches the field (email→@ keyboard, number→numeric, tel→phone pad);
+  fields are grouped logically with clear section labels; required vs optional
+  is signalled (asterisk, "(optional)" label, never both); inline validation
+  fires on blur, not on every keystroke (no "Invalid email" while still typing);
+  submit button is disabled-in-flight with a visible spinner; long forms are
+  multi-step with progress indicator; smart defaults pre-fill where possible.
 
 What pixels can't prove: hover states, transitions, keyboard interaction,
 gesture fluidity, actual feedback timing — flag for live pass.
@@ -350,15 +357,47 @@ minor validation UX.
 Cross-refs: §1 (Nielsen error prevention/recovery), §4 (error copy quality),
 §9 (flow dead-ends).
 
+## 13 · Performance Perception
+
+Does the UI feel fast, or does it feel like it's struggling?
+
+- **Skeleton & loading UX** — do async sections show skeletons or spinners
+  immediately, or does the layout jump when content arrives? Flag layout shift
+  (CLS) visible in screenshots — a button that moves after an image loads is a
+  finding (severity 2–3).
+- **Perceived speed signals** — does the UI acknowledge the user's action within
+  ~100ms (button state change, spinner)? Flag actions with no visible feedback
+  for >1s — the user assumes it didn't work.
+- **Above-the-fold priority** — does the most important content render first?
+  Flag pages where the hero/primary CTA loads last while secondary content
+  (sidebar, footer, ads) renders first.
+- **Optimistic UI** — where appropriate (likes, toggles, quick actions), does
+  the UI update immediately and reconcile later, rather than waiting for the
+  server round-trip?
+- **Jank & stutter** — flag visible layout jumps between states, carousels that
+  don't settle, scrolling that fights the user.
+- **Progressive loading** — are large lists paginated or infinite-scrolled with
+  a "loading more" indicator? Flag 1000-row tables without pagination on mobile.
+
+What pixels can't prove: exact LCP/CLS/INP metrics, animation frame rates,
+actual network waterfall — route to Lighthouse/PageSpeed Insights.
+
+Typical bands: 3 for layout shift on primary CTA or content-jump on a core page;
+2 for missing skeleton on a slow-loading section; 1 for non-optimistic toggle
+that could be optimistic.
+
+Cross-refs: §3 (motion/animation for transition quality), §5 (loading states),
+§6 (responsive behaviour under load).
+
 ---
 
 ## Applying it
 
-For each surface, walk all twelve groups (most will be ✅ — note those too).
+For each surface, walk all thirteen groups (most will be ✅ — note those too).
 Don't invent problems; if a group is clean, say "clean" and move on.
 Cross-surface findings (e.g. an inconsistency between two screens) belong to
 Usability §4 consistency, Content §i18n, or Journey §9 — cite both screenshots.
 
-Group 7–12 (IA, Interaction, Journey, Cognitive, Trust, Error) are the "UX
-depth" dimensions — they catch what a CSS/layout checker misses. Give them the
-same weight as 1–6.
+Groups 7–13 (IA, Interaction, Journey, Cognitive, Trust, Error, Performance)
+are the "UX depth" dimensions — they catch what a CSS/layout checker misses.
+Give them the same weight as 1–6.

@@ -5,8 +5,8 @@ opencode, and any agent that supports the [Agent Skills](https://agentskills.io)
 standard and can read images).
 
 It captures rendered screenshots of *any* web UI, audits them against a
-structured 12-dimension framework (Nielsen + WCAG + Don Norman + IA +
-trust/dark-patterns + error recovery + the language/jargon/state checks the
+structured 13-dimension framework (Nielsen + WCAG + Don Norman + IA +
+trust/dark-patterns + error recovery + performance perception + the language/jargon/state checks the
 generic skills miss), and emits triageable findings with a 0–4 severity each —
 optionally handing the top issues off as regression guards.
 
@@ -22,14 +22,14 @@ Five phases:
    target audience & expected UI language, and any auth.
 2. **Capture** — screenshots per surface × viewport (Playwright, a Playwright
    MCP, or screenshots you provide).
-3. **Analyze** — walk twelve dimension groups over each screenshot, assign a
+3. **Analyze** — walk thirteen dimension groups over each screenshot, assign a
    severity 0–4, tie every finding to a specific screenshot.
 4. **Report** — a triageable report: strengths, findings sorted by severity,
    each with a concrete fix.
 5. **Guard** *(optional)* — turn the top findings into regression guards in
    *your* test stack (framework-agnostic guidance).
 
-The twelve dimensions:
+The thirteen dimensions:
 
 | # | Dimension | Focus |
 |---|---|---|
@@ -40,11 +40,12 @@ The twelve dimensions:
 | 5 | State & Data | empty/loading/error/first-run/zero-one-many/overflow |
 | 6 | Responsive | per-breakpoint layout integrity, touch ergonomics |
 | 7 | Information Architecture | nav structure, labeling, findability, breadcrumbs |
-| 8 | Interaction Design | affordances, feedback, click-target sizing, gestures |
+| 8 | Interaction Design | affordances, feedback, click-target sizing, gestures, form UX |
 | 9 | User Journey / Flow | multi-screen coherence, back-navigation, dead ends |
 | 10 | Cognitive Load & Onboarding | density, chunking, progressive disclosure, first-run guidance |
 | 11 | Trust & Credibility | social proof, dark patterns, security indicators, transparency |
 | 12 | Error Prevention & Recovery | confirmations, undo, error message actionability, degradation |
+| 13 | Performance Perception | skeleton/loading UX, perceived speed, layout shift, optimistic UI |
 
 ## Requirements
 

@@ -40,6 +40,7 @@ By dimension:
 | Cognitive Load & Onboarding | ·· |
 | Trust & Credibility | ·· |
 | Error Prevention & Recovery | ·· |
+| Performance Perception | ·· |
 
 ## ✅ Strengths (don't touch)
 - <what already works — calibrates the review>
@@ -65,6 +66,7 @@ By dimension:
 - <focus order / keyboard nav on the form → live pass>
 - <gesture fluidity on mobile → live pass>
 - <hover state transitions → live pass>
+- <LCP/CLS/INP metrics → run Lighthouse / PageSpeed Insights>
 
 ## Suggested next step
 - <e.g. "fix the S3/S4 set, then add the regression guards in
