@@ -52,7 +52,7 @@ The skill itself is just Markdown + one Node script — **no build step**.
 
 | Tier | Requirement | Why / how |
 |---|---|---|
-| **Core (always)** | An agent that can **read images** (Claude Code, or any image-capable agent). | The analysis is the agent reading screenshots against the checklist. |
+| **Core (always)** | An agent that can **read images** (any image-capable agent). | The analysis is the agent reading screenshots against the checklist. |
 | **Recommended (automated capture)** | **Node.js ≥ 18** and **Playwright**. | Drives a headless browser to take the screenshots. Install: `npm i -D playwright` then `npx playwright install chromium` (downloads a Chromium build, ~100–150 MB). |
 | **Alternative capture** | A **Playwright MCP server** (e.g. `@playwright/mcp`) connected to your agent. | The agent navigates + screenshots through MCP tools instead of the bundled script. No Node script needed. |
 | **Optional (deeper a11y)** | An automated accessibility engine — **axe-core** (`@axe-core/cli`) or **pa11y**. | A screenshot cannot measure exact contrast ratios, focus order, or ARIA. Run one of these for what pixels can't prove; the skill tells you when. |
@@ -107,9 +107,9 @@ Typical phrasings: `"UX audit of http://localhost:3000"`, `"heuristic evaluation
 ```bash
 # 1. capture (Playwright path)
 npm i -D playwright && npx playwright install chromium
-cp ~/.claude/skills/uxui-audit/scripts/capture.config.example.json uxui-audit.config.json
+cp <your-skills-dir>/uxui-audit/scripts/capture.config.example.json uxui-audit.config.json
 # edit uxui-audit.config.json: baseUrl, routes, viewports, (optional) auth
-node ~/.claude/skills/uxui-audit/scripts/capture.mjs uxui-audit.config.json
+node <your-skills-dir>/uxui-audit/scripts/capture.mjs uxui-audit.config.json
 # → screenshots land in ./.ui-review-runs/<timestamp>/
 
 # 2. ask the agent: "/uxui-audit — analyze .ui-review-runs/<timestamp>"
