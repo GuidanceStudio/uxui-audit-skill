@@ -5,57 +5,21 @@ description: Full-spectrum UX/UI audit of a rendered web interface (not its sour
 
 # uxui-audit — Router
 
-This skill audits the full UX/UI spectrum — not just visual design. It reviews
-what the user actually *sees* and *experiences*: it captures rendered
-screenshots, then asks specific, methodical questions across thirteen dimensions,
-assigns a severity per finding, and ties every finding to a screenshot.
-
-It absorbs the best of: shiplightai *Design Review* (5-phase flow + regression
-guards), mastepanoski `nielsen-heuristics-audit` (Nielsen 10 + 0–4 severity),
-Anthropic *frontend-design* (atomic-fix + before/after ethos), WCAG 2.2 / POUR,
-Jakob Nielsen's 10 heuristics, Don Norman, the APCA contrast model, and
-**Morville's UX Honeycomb** (useful / usable / findable / credible / desirable /
-accessible / valuable) as the unifying quality lens. The dimensions that generic
-skills omit: **language/i18n consistency**, **no internal-jargon leak**,
-**error-shaped empty states**, **information architecture**, **trust & credibility
-(dark patterns)**, **error prevention & recovery**, and **performance perception**.
+This skill audits rendered screenshots across 13 dimensions — Nielsen usability, WCAG accessibility, visual design, content/i18n, states, responsive, IA, interaction, journey, cognitive load, trust, error recovery, and performance perception — assigning 0–4 severity per finding and tying every finding to a screenshot.
 
 ## When to invoke
 
-Trigger keywords (any of):
-- "UX audit", "uxui audit", "UI audit", "heuristic evaluation"
-- "review the UI / UX", "UX review", "UI review", "design review"
-- "audit the interface / screens / pages", "check the UX/usability"
-- "is this UI consistent / accessible / on-brand", "a11y review of the UI"
+Trigger keywords: "UX audit", "UI audit", "heuristic evaluation", "design review", "review the UI/UX", "audit the interface", "check the UX", "a11y review".
 
 Do **not** use this for source-level audits (use `tech-audit` D15/D16) or for
 *building* UI (use a frontend-design skill). This reviews the rendered result.
 
 ## The five phases
-
-Run them in order. Detail for each lives in `workflow.md` — read it before
-starting a real review.
-
-1. **Scope** — establish, with the user: which surfaces (URLs/routes/components)
-   and key states; which viewports (default: mobile 390×844, tablet 768×1024,
-   desktop 1440×900); the **target audience and expected UI language(s)**; any
-   auth; and the capture method. Write down what "consistent/done" means for
-   *this* product (e.g. "UI language = Italian", "primary brand = #DC2F47").
-2. **Capture** — take screenshots per surface × viewport (and per reachable
-   state: empty / filled / error). Methods + exact install commands in
-   `capture.md`. Save to a per-run folder; never edit the app to capture.
-3. **Analyze** — read each screenshot and walk the thirteen dimension groups in
-   `dimensions.md`. For each issue: dimension · severity 0–4 · the screenshot ·
-   what's wrong · the concrete fix. Flag what a screenshot *cannot* prove
-   (exact contrast, focus order, keyboard, motion, ARIA, gesture fluidity,
-   actual undo/recovery) → recommend a live/automated pass.
-4. **Report** — emit the triageable report in `report-template.md`: ✅ strengths,
-   then findings sorted by severity, each with a screenshot ref + fix, + summary
-   counts. Be honest; don't pad. Group by surface or by dimension, whichever
-   reads clearer for the set.
-5. **Guard** *(optional, on request)* — turn the top findings into regression
-   guards in the user's own stack (`regression-guards.md`), and/or hand the fix
-   list to a planning/TDD flow. This skill audits; it does not silently edit.
+1. **Scope** — surfaces, viewports, target audience, UI language. See `workflow.md`.
+2. **Capture** — screenshots per surface × viewport × state. See `capture.md`.
+3. **Analyze** — walk 13 dimensions per screenshot. See `dimensions.md`.
+4. **Report** — triageable findings per `report-template.md`.
+5. **Guard** *(optional)* — regression guards. See `regression-guards.md`.
 
 ## The thirteen dimensions (full catalogue in `dimensions.md`)
 
@@ -76,16 +40,7 @@ starting a real review.
 | 13 | **Performance Perception** | skeleton/loading UX, perceived speed, layout shift, optimistic UI |
 
 ## Severity (Nielsen 0–4)
-
-`0` not a problem · `1` cosmetic (fix if time) · `2` minor · `3` major (fix
-soon) · `4` catastrophic (must fix before ship). Assign per finding; sort the
-report by it. Rubric detail in `dimensions.md`.
+`0` not a problem · `1` cosmetic · `2` minor · `3` major · `4` catastrophic. Emoji: 4🔴/3🟡/1-2🟢/0—. Full rubric in `dimensions.md`.
 
 ## Honesty rules
-
-- Every finding cites a **specific screenshot** and a **concrete fix** — no vague
-  "improve the spacing".
-- State what the screenshot **can't** verify and route it to a live/automated
-  check; don't assert a11y pass/fail you can't see.
-- Call out **strengths** too — a review that's all negatives is not trustworthy.
-- Stay generic: the same checklist must work for any web UI in any framework.
+Every finding cites a screenshot + concrete fix + includes strengths. Full conventions in `report-template.md`.

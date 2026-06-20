@@ -29,23 +29,7 @@ Five phases:
 5. **Guard** *(optional)* — turn the top findings into regression guards in
    *your* test stack (framework-agnostic guidance).
 
-The thirteen dimensions:
-
-| # | Dimension | Focus |
-|---|---|---|
-| 1 | Usability | Nielsen's 10 heuristics |
-| 2 | Accessibility | WCAG 2.2 POUR, contrast, target size |
-| 3 | Visual Design | hierarchy, spacing, typography, colour semantics, motion |
-| 4 | Content & Language | i18n consistency, no jargon leak, microcopy, UX writing |
-| 5 | State & Data | empty/loading/error/first-run/zero-one-many/overflow |
-| 6 | Responsive | per-breakpoint layout integrity, touch ergonomics |
-| 7 | Information Architecture | nav structure, labeling, findability, breadcrumbs |
-| 8 | Interaction Design | affordances, feedback, click-target sizing, gestures, form UX |
-| 9 | User Journey / Flow | multi-screen coherence, back-navigation, dead ends |
-| 10 | Cognitive Load & Onboarding | density, chunking, progressive disclosure, first-run guidance |
-| 11 | Trust & Credibility | social proof, dark patterns, security indicators, transparency |
-| 12 | Error Prevention & Recovery | confirmations, undo, error message actionability, degradation |
-| 13 | Performance Perception | skeleton/loading UX, perceived speed, layout shift, optimistic UI |
+The thirteen dimensions: usability, accessibility, visual design, content/i18n, states, responsive, information architecture, interaction design, user journey, cognitive load, trust, error recovery, and performance perception — full catalogue in `uxui-audit/dimensions.md`.
 
 ## Requirements
 
@@ -65,25 +49,15 @@ The skill itself is just Markdown + one Node script — **no build step**.
 
 ## Install
 
-The installer is multi-assistant. Run it with no target for an interactive
-menu, or pass `--target`:
-
 ```sh
 git clone git@github.com:GuidanceStudio/uxui-audit-skill.git
 cd uxui-audit-skill
-./install.sh                      # interactive menu
 ./install.sh --target claude      # ~/.claude/skills/uxui-audit/
 ./install.sh --target codex        # ~/.codex/skills/uxui-audit/
 ./install.sh --target opencode     # ~/.config/opencode/skills/uxui-audit/
-./install.sh --target gemini        # ~/.gemini/commands/uxui-audit.toml (+ payload)
-./install.sh --target agents        # AGENTS.md pointer for Cursor/Windsurf/Copilot/Aider/Continue
 ./install.sh --target all           # claude + codex + opencode
 ./install.sh --target manual        # print the folder path; copy it yourself
-```
-
-Remote one-liner (no clone needed):
-
-```sh
+# or one-liner:
 bash <(curl -fsSL https://raw.githubusercontent.com/GuidanceStudio/uxui-audit-skill/main/install.sh) --target claude
 ```
 
@@ -143,7 +117,5 @@ guards), mastepanoski *nielsen-heuristics-audit* (Nielsen 10 + 0–4 severity),
 Anthropic *frontend-design* (atomic-fix + before/after ethos), the WCAG 2.2 /
 POUR guidelines, Jakob Nielsen's 10 usability heuristics, Don Norman's *The
 Design of Everyday Things*, and the APCA contrast model.
-
-MIT licensed.
 
 MIT licensed.

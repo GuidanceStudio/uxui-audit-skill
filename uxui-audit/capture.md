@@ -75,21 +75,6 @@ can't run a browser.
 
 ---
 
-## What pixels can't capture → run an a11y engine
-
-A screenshot can't measure exact contrast ratios, focus order, keyboard
-operability, motion, or ARIA. For those, run an automated engine and fold its
-output into the report:
-
-```bash
-npx @axe-core/cli http://localhost:3000/settings      # axe-core
-# or
-npx pa11y http://localhost:3000/settings              # pa11y
-```
-
-The review should explicitly say which findings are screenshot-evident and
-which were (or should be) confirmed by axe/pa11y or a live keyboard pass.
-
 ---
 
 ## Viewport presets (reasonable defaults)

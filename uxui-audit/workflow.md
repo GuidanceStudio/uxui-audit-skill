@@ -66,10 +66,6 @@ Goal: honest, specific findings tied to screenshots.
   the same way, same button placement, same language). Cite both screenshots.
   Cross-surface findings belong to Usability §4, Content §4 (i18n), or Journey §9.
 - Don't pad. A clean dimension is "clean".
-- **UX depth dimensions (7–13)**: give IA, Interaction, Journey, Cognitive,
-  Trust, Error Recovery, and Performance the same weight as 1–6. They catch
-  what a CSS/visual checker misses.
-
 Output: a findings list (internal), each triageable.
 
 ## 4 · Report

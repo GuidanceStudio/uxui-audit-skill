@@ -1,6 +1,6 @@
 # Dimensions — the UX/UI audit catalogue
 
-Twelve dimension groups. For each item: what to look for **in a screenshot**, and
+Thirteen dimension groups. For each item: what to look for **in a screenshot**, and
 the typical severity band. Walk every group over every surface. A finding =
 `dimension · severity · surface/screenshot · what's wrong · concrete fix`.
 
@@ -13,15 +13,16 @@ live/automated pass.
 
 ## Severity rubric (Nielsen 0–4)
 
-Rate by **impact × frequency**, not by how easy it is to fix.
+Rate by **impact × frequency**, not by how easy it is to fix. Same scale as
+the `tech-audit` skill (one family): 4🔴 / 3🟡 / 1-2🟢 / 0 no emoji.
 
-| | Meaning | Examples |
-|---|---|---|
-| **0** | Not a usability problem | — |
-| **1** | Cosmetic — fix only if time allows | 1px misalignment; a slightly off shade |
-| **2** | Minor — low priority | a non-ideal label; mild spacing inconsistency |
-| **3** | Major — high priority, fix soon | mixed-language UI; unreadable low-contrast text; primary action not findable; trust-breaking dark pattern |
-| **4** | Catastrophic — must fix before ship | broken/blank screen; error-page leak to users; data loss with no undo; illegible content; deceptive pricing |
+| Severity | Emoji | Meaning | Examples |
+|---|---|---|---|
+| **0** | — | Not a usability problem | — |
+| **1** | 🟢 | Cosmetic — fix only if time allows | 1px misalignment; a slightly off shade |
+| **2** | 🟢 | Minor — low priority | a non-ideal label; mild spacing inconsistency |
+| **3** | 🟡 | Major — high priority, fix soon | mixed-language UI; unreadable low-contrast text; primary action not findable; trust-breaking dark pattern |
+| **4** | 🔴 | Catastrophic — must fix before ship | broken/blank screen; error-page leak to users; data loss with no undo; illegible content; deceptive pricing |
 
 When unsure between two bands, pick the higher one if it touches a primary task
 or first impression.
@@ -30,32 +31,18 @@ or first impression.
 
 ## 1 · Usability — Nielsen's 10 heuristics
 
-1. **Visibility of system status** — does the UI show where you are, what's
-   selected, what's loading/saving, progress? Look for active-nav state,
-   spinners, toasts, "saved" confirmations.
-2. **Match between system and the real world** — labels in the user's language
-   and mental model, not developer/system terms.
-3. **User control & freedom** — visible cancel/close/back/undo on every modal,
-   form, destructive action. No dead-ends.
+1. **System status** — visible nav, spinners, progress, toasts, "saved" confirmations
+2. **Real-world match** — user's language/mental model, not dev terms
+3. **Control & freedom** — cancel/close/back/undo on every modal/form
 4. **Consistency & standards** — same concept = same word, icon, colour, place
-   everywhere (e.g. the nav label and the page title agree). Buttons in
-   consistent positions.
-5. **Error prevention** — confirmations on destructive/irreversible actions;
-   disabled states with a reason; constrained inputs.
-6. **Recognition over recall** — options visible rather than memorised; helper
-   text and examples present where a format is non-obvious. Navigation makes the
-   IA visible (see §7). Common tasks don't require remembering where things live.
-7. **Flexibility & efficiency** — shortcuts/filters/bulk actions for frequent
-   tasks without harming novices.
-8. **Aesthetic & minimalist design** — no noise competing with the primary
-   content; every element earns its place.
-9. **Help users recognise/recover from errors** — error messages are in plain
-   language, say what happened and how to fix it (not a code/stack trace).
-10. **Help & documentation** — contextual help/tooltips where needed; findable.
+5. **Error prevention** — confirmations on destructive actions; disabled states with reason
+6. **Recognition over recall** — options visible; helper text for non-obvious formats; findable IA (see §7)
+7. **Flexibility & efficiency** — shortcuts/filters/bulk actions for frequent tasks
+8. **Minimalist design** — no noise competing with primary content
+9. **Error recovery** — error messages in plain language say what happened and how to fix
+10. **Help & documentation** — contextual help/tooltips where needed
 
-Typical bands: 3–4 for control/freedom and error recovery failures; 2–3 for
-consistency; 1–2 for minimalism nits.
-
+Typical bands: 3–4 for control/freedom and error recovery failures; 2–3 for consistency; 1–2 for minimalism nits.
 Cross-refs: §4 (content), §7 (IA), §9 (journey), §12 (error recovery).
 
 ## 2 · Accessibility — WCAG 2.2, POUR
@@ -117,14 +104,7 @@ impressions.
   placeholders vs empty-states. Mixed EN/IT (or any pair) in one screen, or a
   button half-translated ("New Assistente"), is severity 3 — it screams
   "unfinished" on first impression.
-- **No internal-jargon leak** — user-facing text must not contain:
-  - class-derived titles ("…Page", "ListUsers"), route/component names;
-  - ticket/milestone/issue codes ("UX-NAV-1", "JIRA-123");
-  - file names, paths, script names, migration/seed names;
-  - raw config keys (`pre_warm_pool_max`), env-file names, deploy commands;
-  - internal IDs / UUIDs / slugs shown as the primary identifier;
-  - stack traces / error class names / SQL on an error surface;
-  - placeholder/lorem/faker data shipped in a demo or production build.
+- **No internal-jargon leak** — no class names ("…Page"), ticket codes ("JIRA-123"), file/path/script names, config keys, UUIDs, stack traces, SQL, or lorem/faker data in user-facing text.
   Severity 2–4 depending on whether it's a stray helper (2) or a config/file
   name shown to a customer (3) or a stack trace on a user error page (4).
 - **Microcopy quality** — labels are human and unambiguous; terminology is
@@ -179,8 +159,6 @@ usable reflow; 1 for minor mobile spacing.
 
 ## 7 · Information Architecture
 
-Can the user find things without guessing?
-
 - **Navigation structure** — is the menu/sidebar organised by user task, not by
   internal module? Is the nesting depth sane (≤3 levels)? Are there orphan pages
   with no nav entry?
@@ -196,9 +174,7 @@ Can the user find things without guessing?
   without going back to the root? Are related items linked (e.g. an order page
   links to its customer)?
 
-What pixels can't prove: actual user task-completion rates need analytics or
-tree-testing — flag where the structure looks sound but warn that IA needs
-validation with real users.
+⚠ live check
 
 Typical bands: 3 for missing breadcrumbs on deep pages or duplicate nav labels;
 2 for weak information scent; 1 for nav depth >3 but still usable.
@@ -223,16 +199,9 @@ are captured, partially verifiable from static shots.
 - **Gestures & touch** — swipe hints, pull-to-refresh indicators, long-press
   affordances visible on mobile surfaces. Desktop-only gestures (hover-reveal,
   right-click menus) flagged if missing mobile alternatives.
-- **Form UX** — forms are the #1 interaction surface. Check: mobile keyboard
-  type matches the field (email→@ keyboard, number→numeric, tel→phone pad);
-  fields are grouped logically with clear section labels; required vs optional
-  is signalled (asterisk, "(optional)" label, never both); inline validation
-  fires on blur, not on every keystroke (no "Invalid email" while still typing);
-  submit button is disabled-in-flight with a visible spinner; long forms are
-  multi-step with progress indicator; smart defaults pre-fill where possible.
+- **Form UX** — mobile keyboard matches field ($2→@, number→numeric, tel→phone); fields grouped logically; required vs optional signalled (never both); inline validation on blur; submit disabled-in-flight with spinner; multi-step with progress for long forms; smart defaults.
 
-What pixels can't prove: hover states, transitions, keyboard interaction,
-gesture fluidity, actual feedback timing — flag for live pass.
+⚠ live check
 
 Typical bands: 3 for indistinguishable interactive/static elements on primary
 actions; 2 for missing feedback on a form submission; 1 for overlapping targets
@@ -259,8 +228,7 @@ surfaces.
   submission, import), does the user see a clear confirmation with a summary
   and a next step?
 
-What pixels can't prove: actual completion rates, drop-off points, time-on-task
-— flag for analytics.
+⚠ live check
 
 Typical bands: 3 for dead-end pages or broken back-navigation on core flows;
 2 for inconsistent naming across steps; 1 for missing post-completion guidance.
@@ -268,8 +236,6 @@ Typical bands: 3 for dead-end pages or broken back-navigation on core flows;
 Cross-refs: §1 (user control), §7 (IA navigation), §12 (error recovery).
 
 ## 10 · Cognitive Load & Onboarding
-
-Is the interface learnable, or does it overwhelm?
 
 - **Information density** — is the screen scannable, or a wall of undifferentiated
   text/fields? Are related items grouped (Gestalt proximity)? Flag screens
@@ -286,8 +252,7 @@ Is the interface learnable, or does it overwhelm?
   modal layout, form structure) repeats, the user transfers knowledge. Flag
   surfaces that break the established pattern for no reason.
 
-What pixels can't prove: actual learning curves, task-completion time,
-eye-tracking heatmaps — flag as "verify with user testing."
+⚠ live check
 
 Typical bands: 3 for a blank first-run dashboard with no guidance; 2 for
 undifferentiated walls of fields; 1 for missing progressive disclosure on a
@@ -297,8 +262,6 @@ Cross-refs: §1 (minimalist design), §5 (first-run states), §7 (IA clarity).
 
 ## 11 · Trust & Credibility
 
-Does the UI earn trust or erode it?
-
 - **Social proof** — testimonials, customer logos, case-study links, user counts,
   ratings visible where they matter (landing, pricing, onboarding). Flag missing
   social proof on conversion surfaces (severity 2–3).
@@ -307,18 +270,14 @@ Does the UI earn trust or erode it?
   surfaces.
 - **Privacy transparency** — cookie consent not hidden behind dark patterns,
   data-usage language in plain terms, unsubscribe/delete-account path findable.
-- **Dark patterns** — confirm-shaming ("No thanks, I don't want to save money"),
-  hidden costs (price revealed only at checkout), forced continuity (no cancel
-  link), preselected expensive options, fake urgency/scarcity, disguised ads.
-  Flag every dark pattern at severity 3–4 — they are trust-destroying by design.
+- **Dark patterns** — confirm-shaming, hidden costs, forced continuity, preselected expensive options, fake urgency/scarcity, disguised ads. Flag at severity 3–4.
 - **Brand credibility signals** — professional appearance (cross-ref §3), about
   page, contact info, physical address where expected, terms/privacy links in
   footer.
 - **Error transparency** — does the UI admit when something went wrong in plain
   language (cross-ref §4, §12)?
 
-What pixels can't prove: actual trust metrics (NPS, churn, conversion) — flag
-for analytics.
+⚠ live check
 
 Typical bands: 4 for deceptive pricing or hidden cancellation; 3 for
 confirm-shaming or forced continuity; 2 for missing social proof on a pricing
@@ -347,8 +306,7 @@ What happens when things go wrong — before, during, and after.
 - **Network/offline handling** — is there a visible offline indicator? Does the
   UI prevent data loss on reconnect?
 
-What pixels can't prove: actual undo/recovery behavior, form resubmission on
-reconnect, validation timing — flag for live pass.
+⚠ live check
 
 Typical bands: 4 for no confirmation on account deletion; 3 for unactionable
 error messages on core forms; 2 for missing undo on list operations; 1 for
@@ -358,8 +316,6 @@ Cross-refs: §1 (Nielsen error prevention/recovery), §4 (error copy quality),
 §9 (flow dead-ends).
 
 ## 13 · Performance Perception
-
-Does the UI feel fast, or does it feel like it's struggling?
 
 - **Skeleton & loading UX** — do async sections show skeletons or spinners
   immediately, or does the layout jump when content arrives? Flag layout shift
@@ -379,8 +335,7 @@ Does the UI feel fast, or does it feel like it's struggling?
 - **Progressive loading** — are large lists paginated or infinite-scrolled with
   a "loading more" indicator? Flag 1000-row tables without pagination on mobile.
 
-What pixels can't prove: exact LCP/CLS/INP metrics, animation frame rates,
-actual network waterfall — route to Lighthouse/PageSpeed Insights.
+⚠ live check
 
 Typical bands: 3 for layout shift on primary CTA or content-jump on a core page;
 2 for missing skeleton on a slow-loading section; 1 for non-optimistic toggle

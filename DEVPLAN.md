@@ -324,3 +324,179 @@ timing, smart defaults). Morville's UX Honeycomb added as unifying meta-lens.
 
 **Done when:** `dimensions.md` lists 13 dimensions; all counts match across
 SKILL.md, README, report-template, workflow.
+
+---
+
+## Follow-up — Cross-skill coherence fixes (2026-06-20)
+
+Issues found during coherence audit across forge-flow, uxui-audit, and
+tech-audit. Fixes belong here.
+
+### M15: Fix "Twelve dimension groups" count to 13 in dimensions.md ✅
+
+**Why:** `dimensions.md:3` says *"Twelve dimension groups."* but the file
+actually lists 13 groups (1–13). This is a copy-paste leftover from v0.2
+when there were 12; v0.3 added D13 but the intro text wasn't updated.
+
+**Approach:** Change the intro sentence to *"Thirteen dimension groups."*
+in `uxui-audit/dimensions.md`.
+
+**Tasks:**
+- [x] Change "Twelve dimension groups" → "Thirteen dimension groups" in `uxui-audit/dimensions.md` line 3
+- [x] Verify no other stale count references remain (`grep -rn 'twelve\|Twelve' uxui-audit/`)
+- [x] Commit & push
+
+**Done when:** `dimensions.md` intro count matches the actual number of dimension groups.
+
+### M16: Update system prompt description from 6 to 13 dimensions
+
+**Why:** The skill's `description` in `SKILL.md` frontmatter (which becomes
+the system prompt entry) says *"six dimensions (Nielsen usability, WCAG
+accessibility, visual design, content & language/i18n, state coverage,
+responsive)"* — a leftover from v0.1 when the skill only had 6. The actual
+skill has 13 dimensions; the system prompt misrepresents the scope.
+
+**Approach:** Update the `description:` field in `uxui-audit/SKILL.md`
+frontmatter to say "thirteen dimensions" and list them succinctly or
+summarize without enumerating all 13.
+
+**Status: Cancelled.** The source `SKILL.md` frontmatter already says
+"thirteen dimensions" (updated in v0.3). The stale "six dimensions" text in
+the system prompt is a cached/installed copy issue — reinstalling the skill
+will pick up the correct description. No source change needed.
+
+### M18: Add emoji shorthand to severity table (cross-skill unification) ✅
+
+**Why:** tech-audit and uxui-audit now share the unified 0–4 severity scale.
+tech-audit uses 4🔴 / 3🟡 / 0-2🟢 as visual shorthand banked on the same
+numeric scale. uxui-audit's severity table should show the same emoji mapping
+so reviewers see the same language in both skills.
+
+**Approach:** Add an emoji column to the severity table in
+`uxui-audit/uxui-audit/dimensions.md` and a one-line note in
+`uxui-audit/uxui-audit/SKILL.md` severity section. No other changes needed —
+uxui-audit already uses 0–4.
+
+**Tasks:**
+- [x] Add emoji column to severity table in `uxui-audit/uxui-audit/dimensions.md`
+- [x] Add emoji shorthand note to `uxui-audit/uxui-audit/SKILL.md` severity section
+- [x] Commit & push
+
+**Done when:** uxui-audit severity docs show the same 0–4 + emoji convention as tech-audit.
+
+### M19: Clarify ambiguous cross-reference notation in dimensions.md
+
+**Why:** `dimensions.md:399` says *"Usability §4 consistency, Content §i18n,
+or Journey §9"*. "§4" here refers to Nielsen heuristic #4 (Consistency &
+standards) inside Usability (§1), but the surrounding text uses the same
+§N notation for top-level dimension groups (e.g. §4 = Content & Language).
+The §4 in "Usability §4 consistency" is ambiguous — a reader following the
+§N convention will map it to the wrong dimension group.
+
+**Approach:** Rewrite the phrase to avoid §N notation for Nielsen sub-items.
+Use e.g. *"Usability heuristic 4 (consistency)"* or similar unambiguous
+wording.
+
+**Tasks:**
+- [ ] Clarify the cross-reference in `uxui-audit/dimensions.md` line 399 to avoid §4 ambiguity
+- [ ] Verify the rest of the file for similar §N-overloading issues
+- [ ] Commit & push
+
+**Done when:** The cross-reference notation is unambiguous and §N always
+refers to a top-level dimension group.
+
+---
+
+## v0.4 — Token essentiality pass
+
+Cross-skill audit found ~25% of the skill payload is wasted on duplication
+and verbose prose. Same concepts, same behavior, fewer tokens.
+
+Recommended order: M20 → M21 → M22 → M23.
+
+### M20: Deduplicate across files — severity rubric, honesty rules, pixel limits
+
+**Why:** The 0-4 severity rubric is defined in full in SKILL.md, dimensions.md,
+and report-template.md. Honesty rules ("cite a screenshot, concrete fix,
+include strengths") are in SKILL.md and report-template.md. The "what pixels
+can't prove" disclaimer appears 10+ times across dimensions.md with near-
+identical phrasing. Each duplicate costs tokens on every invocation.
+
+**Approach:**
+- Severity rubric: keep full table only in `dimensions.md`. SKILL.md and
+  report-template.md get 1-line references.
+- Honesty rules: keep in `report-template.md` only. SKILL.md gets 1-line ref.
+- "Pixels can't prove": define once in dimensions.md preamble (already at
+  lines 7-10). Remove per-dimension repeats; replace with `⚠ = pixels can't
+  prove (see preamble)` marker. Remove from `capture.md:78-91`.
+- Remove "UX depth dimensions (7-13)" reminder from workflow.md (keep only
+  in dimensions.md).
+
+**Tasks:**
+- [ ] SKILL.md: replace severity rubric with 1-line reference to dimensions.md
+- [ ] report-template.md: replace severity rubric with 1-line reference
+- [ ] SKILL.md: replace honesty rules with 1-line reference to report-template.md
+- [ ] dimensions.md: remove per-dimension pixel-limit repeats (10 occurrences)
+- [ ] capture.md: remove pixel-cant-prove section, point to dimensions.md
+- [ ] workflow.md: remove "UX depth" reminder
+- [ ] Commit & push
+
+**Done when:** Each concept defined exactly once; cross-references resolve correctly.
+
+### M21: Compress verbose sections — preamble, heuristics, jargon, dark patterns
+
+**Why:** SKILL.md preamble is a 15-line monologue of prior-art citations.
+Nielsen 10 heuristics are 27 lines of prose where single-line descriptions
+suffice. Internal-jargon checklist is 8 lines of full-sentence bullets.
+Dark-patterns list has parenthetical examples expanding each item. All are
+the most token-dense sections.
+
+**Approach:**
+- SKILL.md lines 6-21: compress to 3 lines — the description frontmatter
+  already covers "what it audits".
+- Nielsen 10 (dimensions.md §1): compress each heuristic to 1 line.
+- Internal-jargon checklist (dimensions.md §4): compress to inline CSV list.
+- Dark patterns (dimensions.md §11): compress to inline CSV list.
+- Remove rhetorical questions from §7-13 section headers.
+- Compress trigger keywords from 5 lines to 3.
+
+**Tasks:**
+- [ ] Compress SKILL.md preamble
+- [ ] Compress Nielsen 10 heuristics to 1-line each
+- [ ] Compress jargon checklist + dark patterns list
+- [ ] Remove rhetorical question intros from §7-§13
+- [ ] Compress trigger keywords
+- [ ] Commit & push
+
+**Done when:** Same information density, 25% fewer tokens in the compressed sections.
+
+### M22: Compress SKILL.md phases summary
+
+**Why:** The 5 phases are summarized in SKILL.md (25 lines) and fully detailed
+in workflow.md (103 lines). The SKILL.md summary is verbose enough to be a
+mini-workflow.
+
+**Approach:** Replace SKILL.md lines 34-58 with a 6-line numbered list:
+phase name + 1 sentence. "Detail: `workflow.md`".
+
+**Tasks:**
+- [ ] Compress phases section in SKILL.md
+- [ ] Commit & push
+
+**Done when:** SKILL.md phases section is a quick-reference, not a mini-playbook.
+
+### M23: Trim READMEs
+
+**Why:** README contains redundant install instructions and dimension descriptions
+that duplicate SKILL.md.
+
+**Approach:** Top-level README: compress install section, remove dimension
+detail table (point to SKILL.md). uxui-audit README: remove content that
+duplicates agentskills.io standard info.
+
+**Tasks:**
+- [ ] Compress top-level `README.md`
+- [ ] Compress `uxui-audit/README.md` (if exists)
+- [ ] Commit & push
+
+**Done when:** READMEs convey same information with fewer words.
