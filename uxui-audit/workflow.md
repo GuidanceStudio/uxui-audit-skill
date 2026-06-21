@@ -44,7 +44,7 @@ as it ships.
 - For User Journey (D9), capture sequential screens in a flow path — don't just
   capture isolated pages. A checkout or signup flow needs step-by-step shots.
 
-Output: `./.ui-review-runs/<timestamp>/` (or a folder the user points at) full
+Output: `./.uxui-audit-runs/<timestamp>/` (or a folder the user points at) full
 of screenshots.
 
 ## 3 · Analyze
@@ -67,6 +67,45 @@ Goal: honest, specific findings tied to screenshots.
   Cross-surface findings belong to Usability §4, Content §4 (i18n), or Journey §9.
 - Don't pad. A clean dimension is "clean".
 Output: a findings list (internal), each triageable.
+
+### Non-multimodal agent (model can't see images)
+
+If the model doesn't accept images natively, use an image-description MCP tool
+to convert each screenshot into text, then audit the text:
+
+1. **If the model is multimodal** — use native image input. This is the
+   preferred path. Skip this section.
+2. **If an image-description MCP is available** on the host (e.g.
+   `media_describe_image`, `describe_image`, `describe_image_from_file`) —
+   use it. For each screenshot, call it with a prompt like:
+   > "Describe this UI screenshot in detail: layout, all visible text, colors,
+   > spacing/alignment, interactive elements, states (loading/empty/error),
+   > any visual anomalies or broken elements."
+3. **If no MCP is available** — suggest the user install one. Three public
+   options:
+   - `mcp-image-recognition` (npm) — Anthropic/OpenAI vision, file + base64
+     input, built-in Tesseract OCR.
+   - `ai-image-mcp-server` — GPT-4o Vision, supports targeted prompts
+     (e.g. "describe layout issues").
+   - `z-ai-vision-mcp` — GLM-4.6V, UI-specific tools:
+     `extract_text_from_screenshot`, `diagnose_error_screenshot`,
+     `ui_diff_check`.
+
+**Quality caveats vs native vision:**
+
+| What's lost | Impact |
+|---|---|
+| Exact contrast ratios | Can't judge WCAG contrast; flag everything as "needs axe" |
+| Color-semantic precision | May misread brand colors or miss red-for-danger mismatches |
+| Text accuracy | May hallucinate or paraphrase labels, nav items, error text |
+| Pixel-level alignment | Can't spot 1px misalignments or subtle spacing drift |
+| Layout nuance | May miss z-order issues, overlapping elements, clipping |
+| Icon recognition | May not identify specific icons or their semantic meaning |
+
+Still effective for: nav structure, IA, content/i18n consistency, state
+coverage, dark patterns, error-message quality, journey coherence, cognitive
+load — anything language- or structure-based. Flag the lost categories as
+"needs live / image-capable pass" in the report.
 
 ## 4 · Report
 

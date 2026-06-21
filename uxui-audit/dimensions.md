@@ -13,8 +13,7 @@ live/automated pass.
 
 ## Severity rubric (Nielsen 0–4)
 
-Rate by **impact × frequency**, not by how easy it is to fix. Same scale as
-the `tech-audit` skill (one family): 4🔴 / 3🟡 / 1-2🟢 / 0 no emoji.
+Rate by **impact × frequency**, not by how easy it is to fix. Unified 0–4 scale: 4🔴 / 3🟡 / 1-2🟢 / 0 no emoji.
 
 | Severity | Emoji | Meaning | Examples |
 |---|---|---|---|

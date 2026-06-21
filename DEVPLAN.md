@@ -500,3 +500,60 @@ duplicates agentskills.io standard info.
 - [ ] Commit & push
 
 **Done when:** READMEs convey same information with fewer words.
+
+---
+
+## v0.5 — Non-multimodal fallback documentation
+
+### M24: Document non-multimodal fallback for Analyze phase
+
+**Why:** The skill currently says "needs an image-capable agent" and the
+Analyze phase says "Read every screenshot (the agent's image input)". If the
+model isn't natively multimodal, the agent has no path to analyze screenshots.
+The skill should document how to fall back to an image-description MCP tool
+so the audit still works — with honest caveats about the quality loss.
+
+**Approach (tool-agnostic):**
+- Never hardcode a specific MCP name. Describe the *protocol*:
+  0. If the model accepts images natively (multimodal), use the agent's
+     image input directly — this is the preferred path, no MCP needed.
+  2. If the model is not multimodal, check if the host already provides
+     an image-description MCP tool (e.g. `media_describe_image`,
+     `describe_image`, `describe_image_from_file`) — use it.
+  3. If none is available, suggest the user install one. Mention three
+     public options:
+     - `mcp-image-recognition` (npm) — Anthropic/OpenAI vision, file +
+       base64 input, built-in Tesseract OCR.
+     - `ai-image-mcp-server` — GPT-4o Vision, `describe_image(path,
+       prompt)` supports targeted prompts (ideal for "describe layout
+       issues").
+     - `z-ai-vision-mcp` — GLM-4.6V, UI-specific tools:
+       `extract_text_from_screenshot`, `diagnose_error_screenshot`,
+       `ui_diff_check`.
+  3. The pattern: for each screenshot, call the tool with a prompt like
+     "Describe this UI screenshot in detail — layout, colors, text,
+     states, errors, spacing, alignment, interactive elements."
+- Add a "Non-multimodal agent" sub-section to Phase 3 (Analyze) in
+  `workflow.md` with the fallback pattern + a short table of tradeoffs
+  vs native vision (misses pixel-level contrast, can hallucinate text
+  labels, can't judge color semantics precisely).
+- Update the `description:` frontmatter in `SKILL.md`: change "needs an
+  image-capable agent" to "uses the agent's native image input; for
+  non-multimodal agents, route screenshots through an available
+  image-description MCP tool (see workflow.md)."
+- Add a one-liner cross-reference in `capture.md` after the three
+  capture methods pointing to the Analyze fallback in `workflow.md`.
+
+**Tasks:**
+- [x] `workflow.md` Phase 3: add "Non-multimodal agent" sub-section with
+      tool-agnostic fallback pattern, public MCP suggestions, and
+      quality-loss caveat table
+- [x] `SKILL.md`: update `description` frontmatter to document
+      multimodal requirement + MCP fallback
+- [x] `capture.md`: add brief cross-reference note pointing to
+      `workflow.md` Analyze fallback
+- [ ] Commit & push
+
+**Done when:** A non-multimodal agent reading the skill knows exactly how
+to analyze screenshots via an MCP; the quality-loss caveats are explicit;
+three concrete public MCPs are suggested as fallback options.

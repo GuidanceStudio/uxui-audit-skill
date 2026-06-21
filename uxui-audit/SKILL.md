@@ -1,6 +1,6 @@
 ---
 name: uxui-audit
-description: Full-spectrum UX/UI audit of a rendered web interface (not its source). Captures screenshots of any app — Playwright, a Playwright MCP, or screenshots you provide — then audits them across thirteen dimensions (Nielsen usability, WCAG accessibility, visual design, content & language/i18n, state coverage, responsive, information architecture, interaction design, user journey, cognitive load & onboarding, trust & credibility, error prevention & recovery, performance perception), assigns a 0–4 severity per finding, and emits a triageable report plus optional regression guards. Use when the user asks to "audit the UX/UI", "UX audit", "UI review", "heuristic evaluation", "design review", "audit the interface/screens", or "check the UX" of a running app. Framework-agnostic; needs an image-capable agent (capture needs Node + Playwright, or you supply PNGs).
+description: Full-spectrum UX/UI audit of a rendered web interface (not its source). Captures screenshots of any app — Playwright, a Playwright MCP, or screenshots you provide — then audits them across thirteen dimensions (Nielsen usability, WCAG accessibility, visual design, content & language/i18n, state coverage, responsive, information architecture, interaction design, user journey, cognitive load & onboarding, trust & credibility, error prevention & recovery, performance perception), assigns a 0–4 severity per finding, and emits a triageable report plus optional regression guards. Use when the user asks to "audit the UX/UI", "UX audit", "UI review", "heuristic evaluation", "design review", "audit the interface/screens", or "check the UX" of a running app. Framework-agnostic. Uses the agent's native image input if the model is multimodal; for non-multimodal agents, route screenshots through an available image-description MCP tool (see workflow.md Analyze phase). Capture needs Node + Playwright, or you supply PNGs.
 ---
 
 # uxui-audit — Router
@@ -11,7 +11,7 @@ This skill audits rendered screenshots across 13 dimensions — Nielsen usabilit
 
 Trigger keywords: "UX audit", "UI audit", "heuristic evaluation", "design review", "review the UI/UX", "audit the interface", "check the UX", "a11y review".
 
-Do **not** use this for source-level audits (use `tech-audit` D15/D16) or for
+Do **not** use this for source-level audits or for
 *building* UI (use a frontend-design skill). This reviews the rendered result.
 
 ## The five phases

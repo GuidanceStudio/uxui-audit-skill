@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * ui-review — generic screenshot capture (Playwright).
+ * uxui-audit — generic screenshot capture (Playwright).
  *
  * Framework-agnostic: point it at ANY running web app via a JSON config.
  * It does NOT know about your stack, test runner, or routes — you describe
  * them in the config.
  *
  * Usage:
- *   node capture.mjs [config.json]      # default: ./ui-review.config.json
+ *   node capture.mjs [config.json]      # default: ./uxui-audit.config.json
  *   node capture.mjs --help
  *
  * Requires: Node >= 18 and Playwright.
@@ -23,16 +23,16 @@
  *   "fullPage": true,                          // optional, default true
  *   "waitMs": 600,                             // optional settle delay
  *   "waitUntil": "networkidle",                // optional goto waitUntil
- *   "outDir": ".ui-review-runs"                // optional, timestamped subdir created inside
+ *   "outDir": ".uxui-audit-runs"                // optional, timestamped subdir created inside
  * }
  */
 
 import { mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
-const HELP = `ui-review capture — screenshot any running web app for review.
+const HELP = `uxui-audit capture — screenshot any running web app for review.
 
-  node capture.mjs [config.json]   (default: ./ui-review.config.json)
+  node capture.mjs [config.json]   (default: ./uxui-audit.config.json)
   node capture.mjs --help
 
 Requires Node >= 18 and Playwright:
@@ -71,7 +71,7 @@ async function main() {
     return;
   }
 
-  const configPath = resolve(arg || 'ui-review.config.json');
+  const configPath = resolve(arg || 'uxui-audit.config.json');
   if (!existsSync(configPath)) {
     fail(`config not found: ${configPath}\n  Copy capture.config.example.json and edit it, or pass a path.`);
   }
@@ -100,7 +100,7 @@ async function main() {
     fail('Playwright is not installed.\n  Run: npm i -D playwright && npx playwright install chromium');
   }
 
-  const runDir = join(resolve(cfg.outDir || '.ui-review-runs'), timestamp());
+  const runDir = join(resolve(cfg.outDir || '.uxui-audit-runs'), timestamp());
   mkdirSync(runDir, { recursive: true });
 
   if (cfg.storageState && !existsSync(resolve(cfg.storageState))) {
@@ -144,7 +144,7 @@ async function main() {
 
   const ok = results.filter((r) => r.ok).length;
   console.log(`\n${ok}/${results.length} screenshots → ${runDir}`);
-  console.log('Next: ask your agent to "/ui-review — analyze ' + runDir + '".');
+  console.log('Next: ask your agent to "/uxui-audit — analyze ' + runDir + '".');
 }
 
 main().catch((e) => fail(e.stack || e.message));

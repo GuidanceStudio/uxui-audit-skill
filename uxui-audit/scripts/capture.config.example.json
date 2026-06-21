@@ -15,5 +15,5 @@
   "fullPage": true,
   "waitMs": 600,
   "waitUntil": "networkidle",
-  "outDir": ".ui-review-runs"
+  "outDir": ".uxui-audit-runs"
 }

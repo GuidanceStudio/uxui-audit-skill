@@ -10,7 +10,7 @@ trust/dark-patterns + error recovery + performance perception + the language/jar
 generic skills miss), and emits triageable findings with a 0–4 severity each —
 optionally handing the top issues off as regression guards.
 
-It is the **rendered sibling of `tech-audit`**: same severity scheme and
+It uses a unified 0–4 severity scheme and
 "router + dimensions" philosophy, but the input is *rendered pixels*, not
 source files.
 
@@ -85,9 +85,9 @@ npm i -D playwright && npx playwright install chromium
 cp <your-skills-dir>/uxui-audit/scripts/capture.config.example.json uxui-audit.config.json
 # edit uxui-audit.config.json: baseUrl, routes, viewports, (optional) auth
 node <your-skills-dir>/uxui-audit/scripts/capture.mjs uxui-audit.config.json
-# → screenshots land in ./.ui-review-runs/<timestamp>/
+# → screenshots land in ./.uxui-audit-runs/<timestamp>/
 
-# 2. ask the agent: "/uxui-audit — analyze .ui-review-runs/<timestamp>"
+# 2. ask the agent: "/uxui-audit — analyze .uxui-audit-runs/<timestamp>"
 ```
 
 ## Repository layout

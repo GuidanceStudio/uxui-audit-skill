@@ -1,5 +1,5 @@
 # Capture runs (screenshots + per-run artifacts) live outside version control.
-.ui-review-runs/
+.uxui-audit-runs/
 *-run/
 
 # Playwright / Node

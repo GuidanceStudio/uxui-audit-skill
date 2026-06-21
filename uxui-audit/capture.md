@@ -18,10 +18,10 @@ npx playwright install chromium
 **Run**:
 
 ```bash
-cp scripts/capture.config.example.json ui-review.config.json
-# edit ui-review.config.json — baseUrl, routes, viewports, (optional) auth
-node scripts/capture.mjs ui-review.config.json
-# → screenshots in ./.ui-review-runs/<timestamp>/
+cp scripts/capture.config.example.json uxui-audit.config.json
+# edit uxui-audit.config.json — baseUrl, routes, viewports, (optional) auth
+node scripts/capture.mjs uxui-audit.config.json
+# → screenshots in ./.uxui-audit-runs/<timestamp>/
 ```
 
 Config keys:
@@ -72,6 +72,9 @@ No tooling at all: drop PNGs into a folder (name them
 `<surface>-<viewport>.png`) and point the skill at it. The heuristic analysis
 runs unchanged. Good for designs, Figma exports, or environments where you
 can't run a browser.
+
+> **Analysis fallback**: if the model isn't multimodal, see the Analyze phase
+> in `workflow.md` for the image-description MCP fallback path.
 
 ---
 
