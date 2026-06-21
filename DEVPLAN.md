@@ -530,9 +530,11 @@ so the audit still works — with honest caveats about the quality loss.
      - `z-ai-vision-mcp` — GLM-4.6V, UI-specific tools:
        `extract_text_from_screenshot`, `diagnose_error_screenshot`,
        `ui_diff_check`.
-  3. The pattern: for each screenshot, call the tool with a prompt like
-     "Describe this UI screenshot in detail — layout, colors, text,
-     states, errors, spacing, alignment, interactive elements."
+  3. The pattern: for each screenshot, call the tool with a **UI-specific
+     prompt** (not a generic image description — the tool may default to
+     scene/object recognition). E.g.: "Describe this UI screenshot in
+     detail — layout, colors, text, states, errors, spacing, alignment,
+     interactive elements."
 - Add a "Non-multimodal agent" sub-section to Phase 3 (Analyze) in
   `workflow.md` with the fallback pattern + a short table of tradeoffs
   vs native vision (misses pixel-level contrast, can hallucinate text

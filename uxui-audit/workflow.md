@@ -77,7 +77,9 @@ to convert each screenshot into text, then audit the text:
    preferred path. Skip this section.
 2. **If an image-description MCP is available** on the host (e.g.
    `media_describe_image`, `describe_image`, `describe_image_from_file`) —
-   use it. For each screenshot, call it with a prompt like:
+   use it. For each screenshot, call it with a **UI-specific prompt** (don't
+   ask for a generic image description — the tool may default to scene/object
+   recognition and miss what matters for a UX audit). Use a prompt like:
    > "Describe this UI screenshot in detail: layout, all visible text, colors,
    > spacing/alignment, interactive elements, states (loading/empty/error),
    > any visual anomalies or broken elements."
